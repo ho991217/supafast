@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        "supafast-primary": "#FF177D",
+        "supafast-secondary": "#6800EC",
+      },
+      screens: {
+        "sm": "640px",
+        "md": "768px",
+        "lg": "1024px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

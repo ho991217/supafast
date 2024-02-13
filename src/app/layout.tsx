@@ -1,5 +1,11 @@
 import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import './globals.css';
+
+const pretendard = localFont({
+  src: './PretendardVariable.woff2',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Supafast: 비디오 콘텐츠 서브 플랫폼',
@@ -13,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko-KR'>
-      <body className={''}>{children}</body>
+      <body className={pretendard.className}>{children}</body>
     </html>
   );
 }
