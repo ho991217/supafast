@@ -13,7 +13,7 @@ export default function Search({ className, ...props }: SearchProps) {
       )}
     >
       <input
-        type="search"
+        type="text"
         placeholder="스트리머, 카테고리 검색"
         className="h-[54px] w-[691px] flex-1 bg-transparent pl-6 text-lg font-bold text-white placeholder-neutral-400 focus:outline-none active:outline-none"
       />
