@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const pretendard = localFont({
   src: './PretendardVariable.woff2',
@@ -18,8 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ko-KR'>
-      <body className={pretendard.className}>{children}</body>
+    <html lang="ko-KR">
+      <body className={pretendard.className}>
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
