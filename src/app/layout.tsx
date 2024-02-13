@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 const pretendard = localFont({
   src: './PretendardVariable.woff2',
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={pretendard.className}>
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
