@@ -13,15 +13,15 @@ interface Content {
   /** 페이지 정보 */
   page: Page;
   /** 방송 목록 */
-  data: Datum[];
+  data: ChzzkLive[];
 }
 
-interface Datum {
+export interface ChzzkLive {
   /** 방송 고유 ID */
   liveId: number;
   /** 방송 제목 */
   liveTitle: string;
-  /** 썸네일 이미지 URL */
+  /** 썸네일 이미지 URL, {type}을 해상도로 replace해서 사용 */
   liveImageUrl: string;
   /** 기본 썸네일 이미지 URL */
   defaultThumbnailImageUrl?: string;

@@ -3,7 +3,9 @@ import { LiveListResponse } from "./types";
 
 export async function GET(request: NextRequest) {
   const seachParams = request.nextUrl.searchParams;
-  const size = seachParams.get("size") || "5";
+  const size = seachParams.get("size");
+
+  console.log("size", size);
 
   const url = `https://api.chzzk.naver.com/service/v1/lives?size=${size}`;
   const response: LiveListResponse = await (await fetch(url)).json();
