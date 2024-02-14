@@ -12,6 +12,7 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: 'Supafast: 비디오 콘텐츠 서브 플랫폼',
   description: '내가 즐겨보는 스트리머는 어디로 이적했을까? 정답은 여기에!',
+  openGraph: { images: './opengraph-image.png', type: 'website' },
 };
 
 export default function RootLayout({
