@@ -1,5 +1,5 @@
-import Logo from './components/common/logo';
-import Search from './components/common/search';
+import Logo from '../components/common/logo';
+import Search from '../components/common/search';
 
 export default function NotFound() {
   return (

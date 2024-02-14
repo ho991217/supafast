@@ -26,7 +26,7 @@ export default function LiveCard(live: LiveCardProps) {
   const channelUrl = `https://chzzk.naver.com/${live.channel.channelId}`;
 
   return (
-    <div className="flex w-[272px] flex-col items-center justify-center gap-2">
+    <div className="group/card flex w-[272px] flex-col items-center justify-center gap-2 group-hover/card:bg-red-600">
       <Link href={liveUrl} className="relative overflow-hidden rounded-xl">
         <Badges className="absolute left-2 top-2">
           <Badges.Badge type={'LIVE'} />
@@ -53,7 +53,7 @@ export default function LiveCard(live: LiveCardProps) {
           </Link>
           <Link
             href={channelUrl}
-            className="text-sm font-normal text-neutral-400"
+            className="text-sm font-normal text-neutral-400 hover:underline"
           >
             {live.channel.channelName}
           </Link>
