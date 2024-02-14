@@ -1,4 +1,4 @@
-export interface LiveListResponse {
+export interface ChzzkLiveListResponse {
   /** 응답 코드 */
   code: number;
   /** 응답 메시지 */

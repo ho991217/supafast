@@ -1,5 +1,6 @@
 import LiveChannels from '../components/home/live-channels';
 import MainSearch from '../components/home/main-search';
+import Loading from './loading';
 
 export default async function Home() {
   return (
