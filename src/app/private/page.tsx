@@ -12,17 +12,5 @@ export default async function PrivatePage() {
     redirect('/');
   }
 
-  const { data: data1, error: error1 } = await supabase.functions.invoke(
-    'hello-world',
-    {
-      body: { name: 'name' },
-    }
-  );
-
-  if (error1 || !data1) {
-    console.error(error1);
-    return <p>Failed to fetch data from the server</p>;
-  }
-
-  return <p>{data1.message}</p>;
+  return <p>{data.user.email}</p>;
 }
