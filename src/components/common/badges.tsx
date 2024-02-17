@@ -1,7 +1,8 @@
 import clsx from 'clsx';
-import { Platform } from './live-card';
+import { Platform } from './live-card/live-card';
+import { Skeleton } from '@nextui-org/react';
 
-type BadgeType = 'LIVE' | 'OFFLINE' | 'VOD' | Platform;
+type BadgeType = 'LIVE' | 'OFFLINE' | 'VOD' | Platform | 'LOADING';
 
 interface BadgesProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -39,6 +40,9 @@ function Badge({ type, className, ...props }: BadgeProps) {
         return 'bg-neutral-500 text-black';
     }
   };
+  if (type === 'LOADING')
+    return <div className="h-[23px] w-[95px] rounded-[4px] bg-neutral-900" />;
+
   return (
     <div
       className={clsx(

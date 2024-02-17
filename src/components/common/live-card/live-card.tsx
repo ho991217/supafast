@@ -1,7 +1,7 @@
-import { ChzzkLive } from '@/app/lives/chzzk/types';
+import { ChzzkLive } from '@app/lives/chzzk/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import Badges from './badges';
+import Badges from '../badges';
 
 export type Platform = 'SOOP' | 'YOUTUBE' | 'CHZZK';
 
