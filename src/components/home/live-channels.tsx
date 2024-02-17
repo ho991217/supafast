@@ -1,6 +1,6 @@
-import { ChzzkLiveListResponse } from '@/app/lives/chzzk/types';
-import LiveCard from '../common/live-card';
-import { root_path } from '@/utils/envConfig';
+import type { ChzzkLiveListResponse } from '@app/lives/chzzk/types';
+import { LiveCard } from '@components/common';
+import { root_path } from '@utils/envConfig';
 
 async function getChzzkLives(size: number) {
   const url = `${root_path}/lives/chzzk?size=${size}`;

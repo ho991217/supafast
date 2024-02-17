@@ -1,11 +1,5 @@
-'use client';
-
-import { useQuery } from '@tanstack/react-query';
-import { lazy } from 'react';
-import MainSearch from '../components/home/main-search';
-import LiveChannels from '../components/home/live-channels';
-import { ChzzkLiveListResponse } from './lives/chzzk/types';
 import { Suspense } from 'react';
+import { MainSearch, LiveChannels } from '@components/home';
 import Loading from './loading';
 
 export default function Home() {
