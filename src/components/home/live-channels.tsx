@@ -1,15 +1,9 @@
-'use client';
-
-import { ChzzkLive, ChzzkLiveListResponse } from '@/app/lives/chzzk/types';
+import { ChzzkLiveListResponse } from '@/app/lives/chzzk/types';
 import LiveCard from '../common/live-card';
-import { useQuery } from '@tanstack/react-query';
-
-interface LiveChannelsProps extends React.HTMLAttributes<HTMLDivElement> {
-  expanded?: boolean;
-}
+import { root_path } from '@/utils/envConfig';
 
 async function getChzzkLives(size: number) {
-  const url = `/lives/chzzk?size=${size}`;
+  const url = `${root_path}/lives/chzzk?size=${size}`;
 
   try {
     const response = await fetch(url, {
@@ -26,21 +20,8 @@ async function getChzzkLives(size: number) {
   }
 }
 
-export default function LiveChannels({ expanded = false }: LiveChannelsProps) {
-  const {
-    data: chzzk,
-    isLoading,
-    error,
-  } = useQuery<ChzzkLiveListResponse>({
-    queryKey: ['chzzkLives', expanded],
-    queryFn: async () => {
-      const response = await fetch(`/lives/chzzk?size=${expanded ? 15 : 5}`);
-      return response.json();
-    },
-    refetchInterval: 60000,
-  });
-
-  if (error) throw error;
+export default async function LiveChannels() {
+  const data = await getChzzkLives(15);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -54,7 +35,7 @@ export default function LiveChannels({ expanded = false }: LiveChannelsProps) {
         </ul>
       </div>
       <div className="grid grid-cols-5 place-items-start gap-x-[13px] gap-y-[19px]">
-        {chzzk?.content.data.map((live) => (
+        {data.content.data.map((live) => (
           <LiveCard key={live.liveId} {...live} />
         ))}
       </div>
