@@ -84,3 +84,5 @@ export default function LiveCard(live: LiveCardProps) {
     </div>
   );
 }
+
+export { default as LiveCardSkeleton } from './live-card-skeleton';

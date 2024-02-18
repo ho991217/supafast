@@ -5,9 +5,14 @@ import Link from 'next/link';
 interface LogoProps {
   navigateOnLogoClick?: boolean;
   className?: string;
+  size?: 'sm' | 'lg';
 }
 
-export default function Logo({ className, navigateOnLogoClick }: LogoProps) {
+export default function Logo({
+  className,
+  navigateOnLogoClick,
+  size = 'lg',
+}: LogoProps) {
   return (
     <Link
       href={navigateOnLogoClick ? '/' : '#'}
@@ -19,7 +24,12 @@ export default function Logo({ className, navigateOnLogoClick }: LogoProps) {
       aria-disabled={!navigateOnLogoClick}
       tabIndex={navigateOnLogoClick ? undefined : -1}
     >
-      <Image src="/logo.webp" alt="Supafast" width={630} height={172} />
+      <Image
+        src="/logo.webp"
+        alt="Supafast"
+        width={size === 'lg' ? 630 : 110}
+        height={size === 'lg' ? 172 : 33}
+      />
     </Link>
   );
 }

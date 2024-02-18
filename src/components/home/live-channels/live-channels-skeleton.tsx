@@ -1,7 +1,7 @@
 import { LiveCardSkeleton } from '@components/common';
 import Header from './header';
 
-export default async function LiveChannelsSkeleton() {
+export default async function Skeleton() {
   return (
     <div className="flex flex-col items-center justify-center">
       <Header />

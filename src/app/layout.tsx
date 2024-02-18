@@ -4,6 +4,8 @@ import './globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import Providers from './providers';
+import { Header, SideBar } from '@components/common';
+import clsx from 'clsx';
 
 const pretendard = localFont({
   src: './PretendardVariable.woff2',
@@ -23,8 +25,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className={pretendard.className}>
-        <Providers>{children}</Providers>
+      <body className={clsx(pretendard.className, 'overflow-hidden')}>
+        <Providers>
+          <div className="w-full">
+            <Header />
+            <div className="flex">
+              <SideBar />
+              <div className="flex-1">{children}</div>
+            </div>
+          </div>
+        </Providers>
         <SpeedInsights />
         <Analytics />
       </body>
