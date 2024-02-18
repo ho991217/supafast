@@ -1,3 +1,4 @@
+import React from 'react';
 import { Skeleton as DefaultSkeleton } from '@components/common';
 import Badges from '../badges';
 

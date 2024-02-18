@@ -1,3 +1,4 @@
+import React from 'react';
 import type { ChzzkLiveListResponse } from '@app/lives/chzzk/types';
 import { LiveCard } from '@components/common';
 import { root_path } from '@utils/envConfig';

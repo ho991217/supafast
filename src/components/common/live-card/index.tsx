@@ -1,15 +1,10 @@
+import React from 'react';
 import { ChzzkLive } from '@app/lives/chzzk/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import Badges from '../badges';
 
 export type Platform = 'SOOP' | 'YOUTUBE' | 'CHZZK';
-
-type Streamer = {
-  id: number | string;
-  name: string;
-  profileImage: string;
-};
 
 type LiveCardProps = ChzzkLive;
 

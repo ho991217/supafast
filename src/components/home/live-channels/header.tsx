@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function Header() {
   return (
     <div className="mb-6 flex w-full items-center justify-between">

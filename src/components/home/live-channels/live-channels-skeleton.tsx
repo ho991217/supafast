@@ -1,3 +1,4 @@
+import React from 'react';
 import { LiveCardSkeleton } from '@components/common';
 import Header from './header';
 

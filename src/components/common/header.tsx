@@ -1,3 +1,4 @@
+import React from 'react';
 import { Logo, Search } from '.';
 import Hamberger from 'public/icons/hamberger.svg';
 

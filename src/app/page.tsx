@@ -1,6 +1,9 @@
+import React from 'react';
 import { Suspense } from 'react';
 import { LiveChannels } from '@components/home';
 import Loading from './loading';
+
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (

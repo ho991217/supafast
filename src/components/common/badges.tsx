@@ -1,6 +1,6 @@
+import React from 'react';
 import clsx from 'clsx';
-import { Platform } from './live-card/live-card';
-import { Skeleton } from '@nextui-org/react';
+import { Platform } from './live-card';
 
 type BadgeType = 'LIVE' | 'OFFLINE' | 'VOD' | Platform | 'LOADING';
 

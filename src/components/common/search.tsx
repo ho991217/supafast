@@ -1,3 +1,4 @@
+import React from 'react';
 import clsx from 'clsx';
 import Magnifier from 'public/icons/magnifier.svg';
 import { HTMLAttributes } from 'react';

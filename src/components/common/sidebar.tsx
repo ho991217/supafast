@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -24,8 +25,8 @@ const SIDE_BAR_ITEMS = [
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M8 17V11H12V17H17V9H20L10 0L0 9H3V17H8Z"
           fill="white"
         />
@@ -45,8 +46,8 @@ const SIDE_BAR_ITEMS = [
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M9.5 0.0877134C-3.9 -0.582287 10.24 2.73771 10.24 4.88771C10.24 6.94771 8.89 8.61771 6.83 8.61771C4.76 8.61771 3.2 6.94771 3.2 4.88771L3.23 4.52771C1.21 6.92771 0 10.0377 0 13.4177C0 17.8377 3.58 21.4177 8 21.4177C12.42 21.4177 16 17.8377 16 13.4177C16 8.02771 13.41 3.21771 9.5 0.0877134ZM7.71 18.4177C5.93 18.4177 4.49 17.0177 4.49 15.2777C4.49 13.6577 5.54 12.5177 7.3 12.1577C9.07 11.7977 10.9 10.9477 11.92 9.57771C12.31 10.8677 12.51 12.2277 12.51 13.6177C12.51 16.2677 10.36 18.4177 7.71 18.4177Z"
           fill="#A6A3A3"
         />
@@ -85,8 +86,8 @@ const SIDE_BAR_ITEMS = [
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M12 0C7.03 0 3 4.03 3 9H0L3.89 12.89L3.96 13.03L8 9H5C5 5.13 8.13 2 12 2C15.87 2 19 5.13 19 9C19 12.87 15.87 16 12 16C10.07 16 8.32 15.21 7.06 13.94L5.64 15.36C7.27 16.99 9.51 18 12 18C16.97 18 21 13.97 21 9C21 4.03 16.97 0 12 0ZM11 5V10L15.28 12.54L16 11.33L12.5 9.25V5H11Z"
           fill="#A6A3A3"
         />
@@ -96,7 +97,7 @@ const SIDE_BAR_ITEMS = [
 ];
 
 function SideBarItem(item: SideBarItem) {
-  const [hovered, setHovered] = useState(false);
+  const [hovered] = useState(false);
   return (
     <Link
       key={item.id}

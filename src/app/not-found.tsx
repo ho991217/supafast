@@ -1,3 +1,4 @@
+import React from 'react';
 import Logo from '../components/common/logo';
 import Search from '../components/common/search';
 
