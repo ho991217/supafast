@@ -1,11 +1,10 @@
 import React from 'react';
 import type { ChzzkLiveListResponse } from '@app/lives/chzzk/types';
 import { LiveCard } from '@components/common';
-import { root_path } from '@utils/envConfig';
 import Header from './header';
 
 async function getChzzkLives(size: number) {
-  const url = `${root_path}/lives/chzzk?size=${size}`;
+  const url = `https://api.chzzk.naver.com/service/v1/lives?size=${size}`;
 
   try {
     const response = await fetch(url, {
