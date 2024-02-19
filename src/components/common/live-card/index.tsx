@@ -1,26 +1,98 @@
 import React from 'react';
-import { ChzzkLive } from '@app/lives/chzzk/types';
+import { ChzzkLive } from '@/assets/types/chzzk-types';
 import Image from 'next/image';
 import Link from 'next/link';
 import Badges from '../badges';
 import AdultThumbnail from 'public/images/adult.webp';
+import {
+  YoutubeChannelResponse,
+  YoutubeSnippet,
+} from '@/assets/types/youtube-types';
+import { Platform } from '@/assets/types/common';
 
-export type Platform = 'SOOP' | 'YOUTUBE' | 'CHZZK';
+async function getYoutubeChannelInfo(id: string) {
+  'use server';
+  const url = new URL('https://youtube.googleapis.com/youtube/v3/channels');
+  const params = new URLSearchParams({
+    id,
+    part: 'snippet',
+    fields: 'items/snippet/thumbnails/default',
+    key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY!,
+  });
 
-type LiveCardProps = ChzzkLive;
+  url.search = params.toString();
 
-export default function LiveCard(live: LiveCardProps) {
+  try {
+    const response = await fetch(url.toString(), {
+      next: {
+        revalidate: 60,
+      },
+    });
+    const data: YoutubeChannelResponse = await response.json();
+
+    return data.items[0].snippet.thumbnails.default;
+  } catch (error) {
+    const e = error as Error;
+    throw new Error(e.message);
+  }
+}
+
+export type LiveCardProps = {
+  adultContent?: boolean;
+  thumbnailUrl: string;
+  defaultThumbnailImageUrl?: string;
+  channelId: ChzzkLive['channel']['channelId'] | YoutubeSnippet['channelId'];
+  channelName:
+    | ChzzkLive['channel']['channelName']
+    | YoutubeSnippet['channelTitle'];
+  title: string;
+  viewCount?: ChzzkLive['concurrentUserCount'];
+  category?:
+    | ChzzkLive['liveCategoryValue']
+    | YoutubeSnippet['liveBroadcastContent'];
+  platform: Platform;
+};
+
+export default async function LiveCard(live: LiveCardProps) {
   const parseLiveImageUrl = () => {
-    if (live.adult) return AdultThumbnail;
-    if (live.liveImageUrl) {
-      return live.liveImageUrl.replace('{type}', '480');
+    if (live.adultContent) return AdultThumbnail;
+    if (live.thumbnailUrl) {
+      return live.thumbnailUrl.replace('{type}', '480');
     }
 
     return live.defaultThumbnailImageUrl ?? '';
   };
 
-  const liveUrl = `https://chzzk.naver.com/live/${live.channel.channelId}`;
-  const channelUrl = `https://chzzk.naver.com/${live.channel.channelId}`;
+  const getChannelImageUrl = async () => {
+    if (live.platform === 'CHZZK') {
+      return `https://chzzk.naver.com/channel/${live.channelId}/profile`;
+    } else if (live.platform === 'YOUTUBE') {
+      return (await getYoutubeChannelInfo(live.channelId)).url;
+    }
+    return '';
+  };
+
+  const getLiveUrl = () => {
+    if (live.platform === 'CHZZK') {
+      return `https://chzzk.naver.com/live/${live.channelId}`;
+    } else if (live.platform === 'YOUTUBE') {
+      return `https://www.youtube.com/watch?v=${live.channelId}`;
+    }
+    return '';
+  };
+
+  const getChannelUrl = () => {
+    if (live.platform === 'CHZZK') {
+      return `https://chzzk.naver.com/${live.channelId}`;
+    } else if (live.platform === 'YOUTUBE') {
+      return `https://www.youtube.com/channel/${live.channelId}`;
+    }
+    return '';
+  };
+
+  const liveUrl = getLiveUrl();
+  const channelUrl = getChannelUrl();
+  const channelImageUrl = await getChannelImageUrl();
 
   return (
     <div className="group/card flex w-[272px] flex-col items-center justify-center gap-2 group-hover/card:bg-red-600">
@@ -31,52 +103,59 @@ export default function LiveCard(live: LiveCardProps) {
         </Badges>
         <Image
           src={parseLiveImageUrl()}
-          alt={live.liveTitle}
+          alt={live.title}
           width={272}
           height={153}
-          placeholder="data:image/webp;base64,UklGRroCAABXRUJQVlA4WAoAAAAgAAAAKAEApgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggzAAAALAQAJ0BKikBpwA+0WiwUyglpKKgKAEAGglpbt1gLibg/IAnsB/zych77ZOSlPNhRVhORFpWKMqlb3XFVnGS6MXiD+d3HwBCUoYC3sx2lQayp+89P4Hvtk5D32ycf6ykX0u13CIhkUpdrxcniLz1FTKBoqfvPUVP3np/BNpjw/bZobvMvtpDV3nqCBZ3uAAA/u0Brt4bNf2oHSXVg6WFJAkj0K5w2HASZhf8AVtl9QAAilgoG/weGxmAvMEARbADLOXFJwyxWs3xDwAAAA=="
+          className="bg-neutral-700"
         />
       </Link>
       <div className="flex w-full gap-3">
-        <Image
-          src={live.channel.channelImageUrl}
-          alt={live.channel.channelName}
-          width={32}
-          height={32}
-          className="h-8 w-8 rounded-full"
-          placeholder="data:image/webp;base64,UklGRroCAABXRUJQVlA4WAoAAAAgAAAAKAEApgAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggzAAAALAQAJ0BKikBpwA+0WiwUyglpKKgKAEAGglpbt1gLibg/IAnsB/zych77ZOSlPNhRVhORFpWKMqlb3XFVnGS6MXiD+d3HwBCUoYC3sx2lQayp+89P4Hvtk5D32ycf6ykX0u13CIhkUpdrxcniLz1FTKBoqfvPUVP3np/BNpjw/bZobvMvtpDV3nqCBZ3uAAA/u0Brt4bNf2oHSXVg6WFJAkj0K5w2HASZhf8AVtl9QAAilgoG/weGxmAvMEARbADLOXFJwyxWs3xDwAAAA=="
-        />
+        <Link
+          href={channelUrl}
+          className="h-8 w-8 overflow-hidden rounded-full bg-neutral-700"
+        >
+          <Image
+            src={channelImageUrl}
+            alt={live.channelName}
+            width={32}
+            height={32}
+          />
+        </Link>
         <div className="flex flex-1 flex-col gap-1">
           <Link className="text-sm font-medium hover:underline" href={liveUrl}>
-            {live.liveTitle}
+            {live.title}
           </Link>
           <Link
             href={channelUrl}
             className="text-sm font-normal text-neutral-400 hover:underline"
           >
-            {live.channel.channelName}
+            {live.channelName}
           </Link>
           <div className="flex w-full items-center justify-start gap-2 text-xs">
-            <span className="text-sm font-normal text-neutral-400">
-              {live.concurrentUserCount.toLocaleString()}명 시청중
-            </span>
-            {live.liveCategory && (
-              <svg
-                width="4"
-                height="4"
-                viewBox="0 0 4 4"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4 2C4 3.10457 3.10457 4 2 4C0.895431 4 0 3.10457 0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2Z"
-                  fill="#A6A3A3"
-                />
-              </svg>
+            {live.viewCount && (
+              <span className="text-sm font-normal text-neutral-400">
+                {live.viewCount.toLocaleString()}명 시청중
+              </span>
             )}
-            <span className="text-sm font-normal text-neutral-400">
-              {live.liveCategoryValue}
-            </span>
+            {live.category && (
+              <>
+                <svg
+                  width="4"
+                  height="4"
+                  viewBox="0 0 4 4"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4 2C4 3.10457 3.10457 4 2 4C0.895431 4 0 3.10457 0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2Z"
+                    fill="#A6A3A3"
+                  />
+                </svg>
+                <span className="text-sm font-normal text-neutral-400">
+                  {live.category}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

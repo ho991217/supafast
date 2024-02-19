@@ -10,6 +10,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: '*.pstatic.net',
       },
+      {
+        protocol: 'https',
+        hostname: '*.ytimg.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.naver.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.ggpht.com',
+      },
     ],
   },
   webpack: (config) => {

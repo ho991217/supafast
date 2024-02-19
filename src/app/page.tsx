@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-start">
       <Suspense fallback={<Loading />}>
-        <LiveChannels />
+        <LiveChannels platform="YOUTUBE" />
       </Suspense>
     </main>
   );
