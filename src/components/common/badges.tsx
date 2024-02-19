@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Platform } from './live-card';
+import { Platform } from '@/assets/types/common';
 
 type BadgeType = 'LIVE' | 'OFFLINE' | 'VOD' | Platform | 'LOADING';
 
