@@ -3,6 +3,7 @@ import { ChzzkLive } from '@app/lives/chzzk/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import Badges from '../badges';
+import AdultThumbnail from 'public/images/adult.webp';
 
 export type Platform = 'SOOP' | 'YOUTUBE' | 'CHZZK';
 
@@ -10,6 +11,7 @@ type LiveCardProps = ChzzkLive;
 
 export default function LiveCard(live: LiveCardProps) {
   const parseLiveImageUrl = () => {
+    if (live.adult) return AdultThumbnail;
     if (live.liveImageUrl) {
       return live.liveImageUrl.replace('{type}', '480');
     }
