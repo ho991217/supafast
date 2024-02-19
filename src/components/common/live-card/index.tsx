@@ -45,6 +45,7 @@ export type LiveCardProps = {
   channelName:
     | ChzzkLive['channel']['channelName']
     | YoutubeSnippet['channelTitle'];
+  channelImageUrl?: string;
   title: string;
   viewCount?: ChzzkLive['concurrentUserCount'];
   category?:
@@ -65,7 +66,7 @@ export default async function LiveCard(live: LiveCardProps) {
 
   const getChannelImageUrl = async () => {
     if (live.platform === 'CHZZK') {
-      return `https://chzzk.naver.com/channel/${live.channelId}/profile`;
+      return live.channelImageUrl;
     } else if (live.platform === 'YOUTUBE') {
       return (await getYoutubeChannelInfo(live.channelId)).url;
     }
@@ -99,7 +100,7 @@ export default async function LiveCard(live: LiveCardProps) {
       <Link href={liveUrl} className="relative overflow-hidden rounded-xl">
         <Badges className="absolute left-2 top-2">
           <Badges.Badge type={'LIVE'} />
-          <Badges.Badge type={'CHZZK'} />
+          <Badges.Badge type={live.platform} />
         </Badges>
         <Image
           src={parseLiveImageUrl()}
@@ -115,7 +116,7 @@ export default async function LiveCard(live: LiveCardProps) {
           className="h-8 w-8 overflow-hidden rounded-full bg-neutral-700"
         >
           <Image
-            src={channelImageUrl}
+            src={channelImageUrl ?? ''}
             alt={live.channelName}
             width={32}
             height={32}

@@ -6,12 +6,12 @@ import Header from '@/components/home/live-channels/header';
 
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-start">
-      <Header currentPath="all" />
+      <Header currentPath="youtube" />
       <Suspense fallback={<Loading />}>
-        <LiveChannels platform="ALL" />
+        <LiveChannels platform="YOUTUBE" />
       </Suspense>
     </main>
   );

@@ -1,12 +1,10 @@
 import React from 'react';
 import type { ChzzkLiveListResponse } from '@/assets/types/chzzk-types';
 import { LiveCard } from '@components/common';
-import Header from './header';
+import { LiveCardProps } from '@components/common/live-card';
 import { URLSearchParams } from 'url';
 import { YoutubeLiveResponse } from '@/assets/types/youtube-types';
-import { useSearchParams } from 'next/navigation';
-import { Platform } from '@/assets/types/common';
-import { LiveCardProps } from '@/components/common/live-card';
+import type { Category } from '@/assets/types/common';
 
 async function getChzzkLives(size: number): Promise<ChzzkLiveListResponse> {
   'use server';
@@ -61,7 +59,7 @@ async function getYoutubeLives(size: number): Promise<YoutubeLiveResponse> {
 export default async function LiveChannels({
   platform,
 }: {
-  platform: Platform | 'ALL';
+  platform: Category;
 }) {
   const fetchVideos = async (size: number): Promise<LiveCardProps[]> => {
     if (platform === 'CHZZK') {
@@ -70,11 +68,13 @@ export default async function LiveChannels({
         title: live.liveTitle,
         channelName: live.channel.channelName,
         channelId: live.channel.channelId,
+        channelImageUrl: live.channel.channelImageUrl,
         thumbnailUrl: live.liveImageUrl,
         defaultThumbnailImageUrl: live.defaultThumbnailImageUrl,
-        viewCount: live.accumulateCount,
+        viewCount: live.concurrentUserCount,
         category: live.liveCategory,
         platform: 'CHZZK',
+        adultContent: live.adult,
       }));
     } else if (platform === 'YOUTUBE') {
       const data = await getYoutubeLives(size);
@@ -94,7 +94,6 @@ export default async function LiveChannels({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Header />
       <div className="grid grid-cols-5 place-items-start gap-x-[13px] gap-y-[19px]">
         {videos.map((live) => (
           <LiveCard key={live.channelId} {...live} />
