@@ -123,7 +123,10 @@ export default async function LiveCard(live: LiveCardProps) {
           />
         </Link>
         <div className="flex flex-1 flex-col gap-1">
-          <Link className="text-sm font-medium hover:underline" href={liveUrl}>
+          <Link
+            className="max-h-[40px] overflow-hidden text-ellipsis text-sm font-medium hover:underline"
+            href={liveUrl}
+          >
             {live.title}
           </Link>
           <Link
@@ -152,7 +155,7 @@ export default async function LiveCard(live: LiveCardProps) {
                     fill="#A6A3A3"
                   />
                 </svg>
-                <span className="text-sm font-normal text-neutral-400">
+                <span className="max-w-[100px] overflow-hidden text-ellipsis text-sm font-normal text-neutral-400 ">
                   {live.category}
                 </span>
               </>
